@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Input.Platform;
 using DynamicData;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -35,13 +39,15 @@ public class TwitchRequestItem : ReactiveObject
         Requester = requester;
     }
 
-    public void OpenLocation()
+    public async Task OpenLocation()
     {
-        Process.Start(new ProcessStartInfo(Location)
-        { 
-            UseShellExecute = true, 
-            Verb = "open" 
-        }); 
+        await Application.Current!.Clipboard!.ClearAsync();
+        await Application.Current.Clipboard.SetTextAsync(Location);
+        //Process.Start(new ProcessStartInfo(Location)
+        //{ 
+        //    UseShellExecute = true, 
+        //    Verb = "open" 
+        //}); 
     }
 
     public void Remove()

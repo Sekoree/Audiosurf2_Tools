@@ -1,0 +1,118 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AS2_Tools.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:AS2_Tools.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="250"
+        x:Class="AS2_Tools.Views.Launcher"
+        Title="Launcher"
+        Width="500"
+        Height="250"
+        CanResize="False"
+        WindowStartupLocation="CenterScreen"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaTitleBarHeightHint="0"
+        Icon="/Assets/017.ico"
+        x:CompileBindings="True"
+        x:DataType="viewModels:LauncherViewModel">
+
+    <Design.DataContext>
+        <vm:LauncherViewModel />
+    </Design.DataContext>
+
+    <Grid ColumnDefinitions="*, Auto"
+          RowDefinitions="Auto, *, Auto, Auto">
+
+        <Grid.Background>
+            <ImageBrush Source="avares://AS2_Tools/Assets/017.png"
+                        TileMode="Tile"
+                        Opacity="0.2"
+                        Stretch="UniformToFill" />
+        </Grid.Background>
+
+        <TextBlock Grid.Column="0"
+                   Grid.Row="0"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Center"
+                   FontWeight="ExtraBold"
+                   Text="Audiosurf 2 Tools" />
+
+        <Ellipse Grid.Column="1"
+                 Grid.Row="0"
+                 Height="50"
+                 Width="50"
+                 Margin="10"
+                 VerticalAlignment="Top"
+                 HorizontalAlignment="Center">
+            <Ellipse.Fill>
+                <ImageBrush Source="avares://AS2_Tools/Assets/017-small.png" />
+            </Ellipse.Fill>
+        </Ellipse>
+
+        <!-- Installer here -->
+        <Border Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Grid.Row="1"
+                IsEnabled="{Binding InstallerNeeded}"
+                IsVisible="{Binding InstallerNeeded}"
+                Margin="10,0,10,10"
+                Background="#A0000000"
+                CornerRadius="10">
+            <Grid RowDefinitions="Auto, Auto, Auto"
+                  VerticalAlignment="Center">
+
+                <TextBlock Grid.Row="0"
+                           Margin="10,10,10,7.5"
+                           Text="Community Patch Installer"
+                           FontWeight="SemiBold"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+
+                <TextBlock Grid.Row="1"
+                           Margin="10,7.5,10,7.5"
+                           HorizontalAlignment="Center"
+                           Text="{Binding InstallerStatus}"
+                           VerticalAlignment="Center" />
+                
+                <Button Grid.Row="2"
+                        IsVisible="{Binding !InstallerRunning}"
+                        Margin="10,7.5,10,10"
+                        Height="30"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Command="{Binding InstallCommand}"
+                        Content="Install" />
+
+                <ProgressBar Grid.Row="2"
+                             IsVisible="{Binding InstallerRunning}"
+                             VerticalAlignment="Center"
+                             ShowProgressText="True"
+                             Height="30"
+                             Margin="10,10"
+                             Value="{Binding InstallerProgressValue}"/>
+
+            </Grid>
+        </Border>
+
+        <TextBlock Grid.Column="0"
+                   Grid.Row="2"
+                   Margin="15,0"
+                   Text="Loading..." />
+
+        <TextBlock Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   Grid.Row="2"
+                   Margin="15, 0"
+                   HorizontalAlignment="Right"
+                   Text="{Binding LoadingStatus}" />
+
+        <ProgressBar Grid.Column="0"
+                     Grid.ColumnSpan="2"
+                     Grid.Row="3"
+                     Margin="10"
+                     Foreground="#AA00FF"
+                     IsIndeterminate="True" />
+    </Grid>
+
+</Window>

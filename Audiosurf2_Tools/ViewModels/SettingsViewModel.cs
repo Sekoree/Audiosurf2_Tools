@@ -4,7 +4,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Audiosurf2_Tools.Entities;
 using Audiosurf2_Tools.Models;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;

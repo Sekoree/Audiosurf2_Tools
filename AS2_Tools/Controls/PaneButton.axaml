@@ -1,0 +1,53 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:AS2_Tools.Controls"
+        xmlns:collections="clr-namespace:Avalonia.Collections;assembly=Avalonia.Base">
+    <Design.PreviewWith>
+        <controls:PaneButton MainText="Test Content"
+                             ImageSource="avares://AS2_Tools/Assets/017-small.png">
+        </controls:PaneButton>
+    </Design.PreviewWith>
+
+    <Style Selector="controls|PaneButton">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel Orientation="Vertical"
+                            Background="{TemplateBinding Background}">
+                    <Button Padding="0"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            HorizontalAlignment="Stretch"
+                            Background="Transparent"
+                            Command="{TemplateBinding ButtonCommand}"
+                            CommandParameter="{TemplateBinding ButtonCommandParameter}">
+                        <Button.Content>
+                            <Grid ColumnDefinitions="Auto, 5, *">
+                                <Image Grid.Column="0"
+                                       Margin="{TemplateBinding ImageMargin}"
+                                       Height="{TemplateBinding ImageHeight}"
+                                       VerticalAlignment="Center"
+                                       Source="{TemplateBinding ImageSource}" />
+
+                                <TextBlock Grid.Column="2"
+                                           Margin="5"
+                                           VerticalAlignment="Center"
+                                           Text="{TemplateBinding MainText}" />
+                            </Grid>
+                        </Button.Content>
+                        <Button.Styles>
+                            <Style Selector=""></Style>
+                        </Button.Styles>
+                    </Button>
+                    <ItemsPresenter IsVisible="{TemplateBinding ShowItems}"
+                                    Items="{TemplateBinding Items}">
+                    </ItemsPresenter>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+    
+    <Style Selector="controls|PaneButton:selected">
+        <Setter Property="Background" Value="#77553399"></Setter>
+    </Style>
+    
+</Styles>

@@ -1,0 +1,112 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AS2_Tools.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:AS2_Tools.Controls"
+        xmlns:collections="clr-namespace:Avalonia.Collections;assembly=Avalonia.Base"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AS2_Tools.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="AS2_Tools">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <SplitView IsPaneOpen="{Binding IsPaneOpen}"
+               DisplayMode="CompactInline"
+               OpenPaneLength="200"
+               CompactPaneLength="55">
+
+        <SplitView.Pane>
+
+            <StackPanel>
+                <Button Padding="0"
+                        CornerRadius="15"
+                        Height="50"
+                        Width="50"
+                        Command="{Binding OpenClosePane}">
+                    <Button.Background>
+                        <ImageBrush BitmapInterpolationMode="HighQuality"
+                                    Source="avares://AS2_Tools/Assets/kiwiIcon.png" />
+                    </Button.Background>
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                            <Setter Property="Background">
+                                <ImageBrush Stretch="Fill"
+                                            BitmapInterpolationMode="HighQuality"
+                                            Source="avares://AS2_Tools/Assets/kiwiIcon.png" />
+                            </Setter>
+                        </Style>
+                    </Button.Styles>
+                </Button>
+
+                <Separator Margin="0,10"
+                           Background="Transparent" />
+                <controls:PaneButton MainText="More Folders"
+                                     CornerRadius="7.5"
+                                     ImageHeight="30"
+                                     ImageMargin="5"
+                                     ButtonCommand="{Binding ChangePageCommand}"
+                                     ButtonCommandParameter="{Binding $self}"
+                                     ImageSource="{SvgImage avares://AS2_Tools/Assets/folder.svg}"
+                                     PageViewModel="{Binding MoreFoldersViewModel}">
+                    <controls:PaneButton.PageContent>
+                        <controls:MoreFoldersView/>
+                    </controls:PaneButton.PageContent>
+                </controls:PaneButton>
+                <controls:PaneButton MainText="Playlist Editor"
+                                     CornerRadius="7.5"
+                                     ImageHeight="30"
+                                     ImageMargin="5"
+                                     ImageSource="{SvgImage avares://AS2_Tools/Assets/playlist.svg}" />
+                <controls:PaneButton MainText="Twitch Bot"
+                                     CornerRadius="7.5"
+                                     ImageHeight="30"
+                                     ImageMargin="5"
+                                     ImageSource="{SvgImage avares://AS2_Tools/Assets/twitch-icon.svg}">
+                    <controls:PaneButton.Items>
+                        <collections:AvaloniaList x:TypeArguments="Control">
+                            <controls:PaneButton Margin="15,0,0,0"
+                                                 MainText="Twitch Settings"
+                                                 CornerRadius="7.5"
+                                                 ImageHeight="30"
+                                                 ImageMargin="5"
+                                                 ImageSource="{SvgImage avares://AS2_Tools/Assets/twitchSettings.svg}" />
+                            <controls:PaneButton Margin="15,0,0,0"
+                                                 MainText="Commands"
+                                                 CornerRadius="7.5"
+                                                 ImageHeight="30"
+                                                 ImageMargin="5"
+                                                 ImageSource="{SvgImage avares://AS2_Tools/Assets/twitchCommands.svg}" />
+                        </collections:AvaloniaList>
+                    </controls:PaneButton.Items>
+                </controls:PaneButton>
+                <controls:PaneButton MainText="Settings"
+                                     CornerRadius="7.5"
+                                     ImageHeight="30"
+                                     ImageMargin="5"
+                                     ImageSource="{SvgImage avares://AS2_Tools/Assets/settings.svg}" />
+                <controls:PaneButton MainText="About"
+                                     CornerRadius="7.5"
+                                     ImageHeight="30"
+                                     ImageMargin="5"
+                                     ImageSource="{SvgImage avares://AS2_Tools/Assets/info.svg}" 
+                                     ButtonCommand="{Binding ChangePageCommand}"
+                                     ButtonCommandParameter="{Binding $self}"
+                                     PageViewModel="{Binding AboutViewModel}">
+                    <controls:PaneButton.PageContent>
+                        <controls:AboutView/>
+                    </controls:PaneButton.PageContent>
+                </controls:PaneButton>
+            </StackPanel>
+
+        </SplitView.Pane>
+
+        <SplitView.Content>
+            <TextBlock Text="Hi" />
+        </SplitView.Content>
+    </SplitView>
+
+</Window>

@@ -21,4 +21,6 @@ public class AppSettings
     public bool TwitchEnableLocalRequests { get; set; } = false;
     public string TwitchLocalRequestPath { get; set; } = "";
     public int TwitchLocalRequestMaxSizeMB { get; set; } = 50;
+    
+    public string AS2Location { get; set; } = "";
 }

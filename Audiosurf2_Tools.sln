@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Audiosurf2_Tools", "Audiosurf2_Tools\Audiosurf2_Tools.csproj", "{3DA5EA78-12E7-48C4-A621-D1B6C584FC96}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AS2_Tools", "AS2_Tools\AS2_Tools.csproj", "{ED7EA1BE-B32D-4EFF-8406-E4D8E034F1D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
