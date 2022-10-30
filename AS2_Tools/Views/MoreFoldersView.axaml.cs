@@ -2,11 +2,11 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace AS2_Tools.Controls;
+namespace AS2_Tools.Views;
 
-public partial class AboutView : UserControl
+public partial class MoreFoldersView : UserControl
 {
-    public AboutView()
+    public MoreFoldersView()
     {
         InitializeComponent();
     }

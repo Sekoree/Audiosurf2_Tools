@@ -1,0 +1,48 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:AS2_Tools.ViewModels"
+             xmlns:models="clr-namespace:AS2_Tools.Models"
+             xmlns:controls="clr-namespace:AS2_Tools.Controls"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="450"
+             x:Class="AS2_Tools.Views.MoreFoldersView">
+    
+    <Design.DataContext>
+        <viewModels:MoreFoldersViewModel/>
+    </Design.DataContext>
+    
+    <Grid ColumnDefinitions="*, Auto">
+        <ScrollViewer Grid.Column="0">
+            <ItemsControl Items="{Binding MoreFoldersItems}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="models:MoreFolderItemModel">
+                        <controls:MoreFolderItemControl MoreFolderItem="{Binding .}"
+                                                        BrowseWindowParameter="{Binding $parent[Window]}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        
+        <StackPanel Grid.Column="1"
+                    Orientation="Vertical">
+            <Button Height="50"
+                    Command="{Binding ReloadFromFileAsync}"
+                    ToolTip.Tip="Reload">
+                <Image Source="{SvgImage avares://AS2_Tools/Assets/reload.svg}"/>
+            </Button>
+            <Button Height="50"
+                    Command="{Binding SaveToFileAsync}"
+                    ToolTip.Tip="Save">
+                <Image Source="{SvgImage avares://AS2_Tools/Assets/save.svg}"/>
+            </Button>
+            <Button Height="50"
+                    Command="{Binding AddFolderCommand}"
+                    CommandParameter="{Binding $parent[Window]}"
+                    ToolTip.Tip="Add Folder">
+                <Image Source="{SvgImage avares://AS2_Tools/Assets/addFolder.svg}"/>
+            </Button>
+        </StackPanel>
+    </Grid>
+    
+</UserControl>

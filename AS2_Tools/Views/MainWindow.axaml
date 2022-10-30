@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:AS2_Tools.Controls"
         xmlns:collections="clr-namespace:Avalonia.Collections;assembly=Avalonia.Base"
+        xmlns:views="clr-namespace:AS2_Tools.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AS2_Tools.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
@@ -17,7 +18,8 @@
     <SplitView IsPaneOpen="{Binding IsPaneOpen}"
                DisplayMode="CompactInline"
                OpenPaneLength="200"
-               CompactPaneLength="55">
+               CompactPaneLength="55"
+               Content="{Binding CurrentView}">
 
         <SplitView.Pane>
 
@@ -53,7 +55,7 @@
                                      ImageSource="{SvgImage avares://AS2_Tools/Assets/folder.svg}"
                                      PageViewModel="{Binding MoreFoldersViewModel}">
                     <controls:PaneButton.PageContent>
-                        <controls:MoreFoldersView/>
+                        <views:MoreFoldersView/>
                     </controls:PaneButton.PageContent>
                 </controls:PaneButton>
                 <controls:PaneButton MainText="Playlist Editor"
@@ -97,16 +99,19 @@
                                      ButtonCommandParameter="{Binding $self}"
                                      PageViewModel="{Binding AboutViewModel}">
                     <controls:PaneButton.PageContent>
-                        <controls:AboutView/>
+                        <views:AboutView/>
                     </controls:PaneButton.PageContent>
                 </controls:PaneButton>
             </StackPanel>
 
         </SplitView.Pane>
-
-        <SplitView.Content>
-            <TextBlock Text="Hi" />
-        </SplitView.Content>
+        
+        <SplitView.Styles>
+            <Style Selector="SplitView/template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Margin" Value="10"/>
+            </Style>
+        </SplitView.Styles>
+        
     </SplitView>
 
 </Window>

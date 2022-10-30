@@ -1,6 +1,7 @@
 ﻿<Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:AS2_Tools"
+             xmlns:converters="clr-namespace:AS2_Tools.Converters"
              x:Class="AS2_Tools.App">
     <Application.DataTemplates>
         <local:ViewLocator/>
@@ -9,5 +10,10 @@
     <Application.Styles>
         <FluentTheme Mode="Dark"/>
         <StyleInclude Source="/Controls/PaneButton.axaml"/>
+        <StyleInclude Source="/Controls/MoreFolderItemControl.axaml"/>
     </Application.Styles>
+    
+    <Application.Resources>
+        <converters:MoreFolderItemPositionConverter x:Key="MoreFolderItemPositionConverter"/>
+    </Application.Resources>
 </Application>

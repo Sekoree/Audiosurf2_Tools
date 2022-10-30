@@ -1,0 +1,210 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:AS2_Tools.Controls">
+    <Design.PreviewWith>
+        <StackPanel Orientation="Vertical">
+            <controls:MoreFolderItemControl ItemPosition="3" />
+            <controls:MoreFolderItemControl Classes="editing" />
+        </StackPanel>
+    </Design.PreviewWith>
+
+    <Style Selector="controls|MoreFolderItemControl">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid ColumnDefinitions="Auto, Auto, *, Auto"
+                      RowDefinitions="Auto, Auto">
+
+                    <Button Grid.Column="0"
+                            Grid.Row="0"
+                            Padding="0"
+                            Margin="5,5,5,2.5"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            Command="{TemplateBinding UpButtonCommand}">
+                        <Image Height="25"
+                               Source="{SvgImage avares://AS2_Tools/Assets/upArrow.svg}" />
+                    </Button>
+                    <Button Grid.Column="0"
+                            Grid.Row="1"
+                            Padding="0"
+                            Margin="5,2.5,5,5"
+                            Width="50"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            Command="{TemplateBinding DownButtonCommand}">
+                        <Image Height="25"
+                               Source="{SvgImage avares://AS2_Tools/Assets/downArrow.svg}" />
+                    </Button>
+
+                    <Label Grid.Column="1"
+                           Grid.Row="0"
+                           Padding="0"
+                           Margin="5"
+                           Width="50"
+                           HorizontalAlignment="Stretch"
+                           HorizontalContentAlignment="Center"
+                           VerticalContentAlignment="Center"
+                           Content="Order" />
+                    <Label Grid.Column="1"
+                           Grid.Row="1"
+                           Margin="5"
+                           Width="50"
+                           HorizontalAlignment="Center"
+                           HorizontalContentAlignment="Center"
+                           VerticalAlignment="Center"
+                           VerticalContentAlignment="Center"
+                           Content="{TemplateBinding ItemPosition, Converter={StaticResource MoreFolderItemPositionConverter}}" />
+
+                    <TextBlock Grid.Column="2"
+                               Grid.Row="0"
+                               Margin="5,5,5,2.5"
+                               VerticalAlignment="Center"
+                               Text="{TemplateBinding ItemName}" />
+                    <TextBlock Grid.Column="2"
+                               Grid.Row="1"
+                               Margin="5,2.5,5,5"
+                               VerticalAlignment="Center"
+                               TextWrapping="Wrap"
+                               Text="{TemplateBinding ItemPath}" />
+
+                    <Button Grid.Column="3"
+                            Grid.Row="0"
+                            Padding="0"
+                            Margin="5,5,5,2.5"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            Command="{TemplateBinding EditCommand}">
+                        <Image Height="25"
+                               Margin="5"
+                               Source="{SvgImage avares://AS2_Tools/Assets/edit.svg}" />
+                    </Button>
+                    <Button Grid.Column="3"
+                            Grid.Row="1"
+                            Padding="0"
+                            Margin="5,2.5,5,5"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            Command="{TemplateBinding RemoveButtonCommand}">
+                        <Image Height="25"
+                               Margin="5"
+                               Source="{SvgImage avares://AS2_Tools/Assets/delete.svg}" />
+                    </Button>
+
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style Selector="controls|MoreFolderItemControl.editing">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid ColumnDefinitions="Auto, Auto, *, Auto"
+                      RowDefinitions="Auto, Auto">
+
+                    <Label Grid.Column="0"
+                           Grid.Row="0"
+                           Padding="0"
+                           Margin="5"
+                           Width="50"
+                           HorizontalAlignment="Stretch"
+                           HorizontalContentAlignment="Center"
+                           VerticalContentAlignment="Center"
+                           Content="Order" />
+                    <TextBox Grid.Column="0"
+                             Grid.Row="1"
+                             Margin="5"
+                             Padding="5"
+                             Width="50"
+                             HorizontalAlignment="Center"
+                             HorizontalContentAlignment="Center"
+                             VerticalAlignment="Center"
+                             VerticalContentAlignment="Center"
+                             Text="{TemplateBinding ItemPosition, Converter={StaticResource MoreFolderItemPositionConverter}, Mode=TwoWay}" />
+
+                    <Button Grid.Column="1"
+                            Grid.Row="0"
+                            Padding="0"
+                            Margin="5,5,5,2.5"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            Command="{TemplateBinding UpButtonCommand}">
+                        <Image Height="25"
+                               Source="{SvgImage avares://AS2_Tools/Assets/upArrow.svg}" />
+                    </Button>
+                    <Button Grid.Column="1"
+                            Grid.Row="1"
+                            Padding="0"
+                            Margin="5,2.5,5,5"
+                            Width="50"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            Command="{TemplateBinding DownButtonCommand}">
+                        <Image Height="25"
+                               Source="{SvgImage avares://AS2_Tools/Assets/downArrow.svg}" />
+                    </Button>
+
+                    <TextBox Grid.Column="2"
+                             Grid.Row="0"
+                             VerticalAlignment="Center"
+                             VerticalContentAlignment="Center"
+                             Margin="5,5,5,2.5"
+                             Text="{TemplateBinding ItemName, Mode=TwoWay}" />
+                    
+                    <Grid Grid.Column="2"
+                          Grid.Row="1"
+                          ColumnDefinitions="*, Auto">
+                        
+                        <TextBox Grid.Column="0"
+                                 VerticalAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 CornerRadius="3,0,0,3"
+                                 BorderThickness="1,1,0,1"
+                                 Margin="5,4,0,5"
+                                 TextWrapping="Wrap"
+                                 Text="{TemplateBinding ItemPath, Mode=TwoWay}" />
+                        
+                        <Button Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Padding="6,7,6,6"
+                                Margin="0,0,5,0"
+                                BorderBrush="White"
+                                BorderThickness="1"
+                                CornerRadius="0, 3, 3, 0"
+                                Content="Browse"
+                                Command="{TemplateBinding BrowseButtonCommand}"
+                                CommandParameter="{TemplateBinding BrowseWindowParameter}"/>
+                    </Grid>
+
+                    <Button Grid.Column="3"
+                            Grid.Row="0"
+                            Padding="0"
+                            Margin="5,5,5,2.5"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            Command="{TemplateBinding EditCommand}">
+                        <Image Height="25"
+                               Margin="5"
+                               Source="{SvgImage avares://AS2_Tools/Assets/checkmark.svg}" />
+                    </Button>
+                    <Button Grid.Column="3"
+                            Grid.Row="1"
+                            Padding="0"
+                            Margin="5,2.5,5,5"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            Command="{TemplateBinding RemoveButtonCommand}">
+                        <Image Height="25"
+                               Margin="5"
+                               Source="{SvgImage avares://AS2_Tools/Assets/delete.svg}" />
+                    </Button>
+
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

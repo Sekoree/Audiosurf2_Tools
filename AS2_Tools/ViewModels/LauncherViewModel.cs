@@ -85,9 +85,18 @@ public class LauncherViewModel : ViewModelBase
         await Task.Delay(2000);
         try
         {
+            var vm = new MainWindowViewModel();
+            //Init all PageViewModels
+            await vm.MoreFoldersViewModel.InitializeAsync();
+            //await vm.PlaylistsViewModel.InitializeAsync();
+            //await vm.TwitchBotViewModel.InitializeAsync();
+            //await vm.TwitchBotSettingsViewModel.InitializeAsync();
+            //await vm.TwitchBotCommandsViewModel.InitializeAsync();
+            //await vm.SettingsViewModel.InitializeAsync();
+            await vm.AboutViewModel.InitializeAsync();
             var mainWindow = new MainWindow()
             {
-                DataContext = new MainWindowViewModel()
+                DataContext = vm
             };
             mainWindow.Show();
             window?.Close();
