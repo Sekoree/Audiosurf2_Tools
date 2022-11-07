@@ -15,6 +15,8 @@ public class MainWindowViewModel : ViewModelBase
     [Reactive] public bool IsPaneOpen { get; set; } = true;
 
     [Reactive] public MoreFoldersViewModel MoreFoldersViewModel { get; set; } = new();
+    [Reactive] public PlaylistEditorViewModel PlaylistEditorViewModel  { get; set; } = new();
+    [Reactive] public TwitchBotMainViewModel TwitchBotMainViewModel { get; set; } = new();
     [Reactive] public AboutViewModel AboutViewModel { get; set; } = new();
 
     public PaneButton? CurrentSelection

@@ -7,42 +7,88 @@
              xmlns:controls="clr-namespace:AS2_Tools.Controls"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="450"
              x:Class="AS2_Tools.Views.MoreFoldersView">
-    
+
     <Design.DataContext>
-        <viewModels:MoreFoldersViewModel/>
+        <viewModels:MoreFoldersViewModel />
     </Design.DataContext>
-    
-    <Grid ColumnDefinitions="*, Auto">
-        <ScrollViewer Grid.Column="0">
+
+    <Grid RowDefinitions="Auto, Auto, *">
+
+        <Border Grid.Row="0"
+                Margin="5"
+                BorderBrush="White"
+                BorderThickness="2"
+                CornerRadius="7.5">
+
+            <Grid ColumnDefinitions="*, Auto, Auto, Auto">
+
+                <TextBlock Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Padding="25,5"
+                           FontWeight="Heavy"
+                           Text="MoreFolders" />
+
+                <Button Grid.Column="1"
+                        CornerRadius="7.5"
+                        Command="{Binding AddFolderCommand}"
+                        CommandParameter="{Binding $parent[Window]}">
+                    <Image Height="35"
+                           Source="{SvgImage avares://AS2_Tools/Assets/addFolder.svg}" />
+                </Button>
+                <Button Grid.Column="2"
+                        CornerRadius="7.5"
+                        Command="{Binding SaveToFileAsync}">
+                    <Image Height="35"
+                           Source="{SvgImage avares://AS2_Tools/Assets/save.svg}" />
+                </Button>
+                <Button Grid.Column="3"
+                        CornerRadius="7.5"
+                        Command="{Binding ReloadFromFileAsync}">
+                    <Image Height="35"
+                           Source="{SvgImage avares://AS2_Tools/Assets/reload.svg}" />
+                </Button>
+            </Grid>
+
+        </Border>
+
+        <Border Grid.Row="1"
+                Margin="5"
+                BorderBrush="White"
+                BorderThickness="2"
+                CornerRadius="7.5">
+
+            <Grid ColumnDefinitions="Auto, Auto, *">
+                <TextBlock Grid.Column="0"
+                           Padding="15,5"
+                           Text="Pos." />
+                <Separator Grid.Column="1"
+                           Width="1"
+                           Margin="0"
+                           Padding="0"
+                           Height="15" />
+                <TextBlock Grid.Column="2"
+                           Padding="15,5"
+                           Text="Properties" />
+            </Grid>
+        </Border>
+
+        <ScrollViewer Grid.Row="2">
             <ItemsControl Items="{Binding MoreFoldersItems}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="models:MoreFolderItemModel">
-                        <controls:MoreFolderItemControl MoreFolderItem="{Binding .}"
-                                                        BrowseWindowParameter="{Binding $parent[Window]}"/>
+                        <Border BorderBrush="White"
+                                BorderThickness="2"
+                                CornerRadius="7.5"
+                                Margin="5">
+                            <controls:MoreFolderItemControl Background="Transparent"
+                                                            MoreFolderItem="{Binding .}"
+                                                            BrowseWindowParameter="{Binding $parent[Window]}" />
+                        </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        
-        <StackPanel Grid.Column="1"
-                    Orientation="Vertical">
-            <Button Height="50"
-                    Command="{Binding ReloadFromFileAsync}"
-                    ToolTip.Tip="Reload">
-                <Image Source="{SvgImage avares://AS2_Tools/Assets/reload.svg}"/>
-            </Button>
-            <Button Height="50"
-                    Command="{Binding SaveToFileAsync}"
-                    ToolTip.Tip="Save">
-                <Image Source="{SvgImage avares://AS2_Tools/Assets/save.svg}"/>
-            </Button>
-            <Button Height="50"
-                    Command="{Binding AddFolderCommand}"
-                    CommandParameter="{Binding $parent[Window]}"
-                    ToolTip.Tip="Add Folder">
-                <Image Source="{SvgImage avares://AS2_Tools/Assets/addFolder.svg}"/>
-            </Button>
-        </StackPanel>
+
     </Grid>
-    
+
 </UserControl>

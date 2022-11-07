@@ -6,6 +6,7 @@ using AS2_Tools.Models;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 using Avalonia.Platform.Storage;
 using ReactiveUI;
 
@@ -15,10 +16,11 @@ public class MoreFolderItemControl : TemplatedControl
 {
     public static readonly StyledProperty<MoreFolderItemModel> MoreFolderItemProperty =
         AvaloniaProperty.Register<MoreFolderItemControl, MoreFolderItemModel>(
-            nameof(MoreFolderItem));
+            nameof(MoreFolderItem), new MoreFolderItemModel());
 
-    public static readonly StyledProperty<object?> BrowseWindowParameterProperty = AvaloniaProperty.Register<MoreFolderItemControl, object?>(
-        nameof(BrowseWindowParameter));
+    public static readonly StyledProperty<object?> BrowseWindowParameterProperty =
+        AvaloniaProperty.Register<MoreFolderItemControl, object?>(
+            nameof(BrowseWindowParameter));
 
     public object? BrowseWindowParameter
     {
@@ -73,9 +75,20 @@ public class MoreFolderItemControl : TemplatedControl
         BrowseButtonCommand = ReactiveCommand.CreateFromTask<Window>(BrowseForNewPathAsync);
 
         this.WhenAnyValue(x => x.MoreFolderItem.IsEditing)
-            .Subscribe(value => Classes.Set("editing", value));
+            .Subscribe(value =>
+            {
+                Classes.Set("editing", value);
+                Classes.Set("hover", false);
+            });
+        this.WhenAnyValue(x => x.IsPointerOver)
+            .Subscribe(value =>
+            {
+                if (MoreFolderItem.IsEditing)
+                    return;
+                Classes.Set("hover", value);
+            });
     }
-    
+
     public async Task BrowseForNewPathAsync(Window parentWindow)
     {
         var folderPickerOptions = new FolderPickerOpenOptions()
@@ -93,27 +106,15 @@ public class MoreFolderItemControl : TemplatedControl
             }
         }
     }
-    
+
     public void MoveUpOrIncrement()
     {
-        if (MoreFolderItem.IsEditing)
-        {
-            ItemPosition++;
-            RaisePropertyChanged(ItemPositionProperty, ItemPosition - 1, ItemPosition);
-        }
-        else
-            MoreFolderItem.MoveUp();
+        MoreFolderItem.MoveUp();
     }
-    
+
     public void MoveDownOrDecrement()
     {
-        if (!MoreFolderItem.IsEditing)
-            MoreFolderItem.MoveDown();
-        else if (MoreFolderItem.Position > -1)
-        {
-            ItemPosition--;
-            RaisePropertyChanged(ItemPositionProperty, ItemPosition + 1, ItemPosition);
-        }
+        MoreFolderItem.MoveDown();
     }
 
     public ICommand? UpButtonCommand
@@ -159,7 +160,7 @@ public class MoreFolderItemControl : TemplatedControl
         AvaloniaProperty.RegisterDirect<MoreFolderItemControl, int>(
             nameof(Name),
             o => o.ItemPosition,
-            (o, v) => o.ItemPosition = v);
+            (o, v) => o.ItemPosition = v, -1);
 
 
     public static readonly DirectProperty<MoreFolderItemControl, string> ItemNameProperty =

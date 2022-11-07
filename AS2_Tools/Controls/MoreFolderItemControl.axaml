@@ -2,8 +2,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="using:AS2_Tools.Controls">
     <Design.PreviewWith>
-        <StackPanel Orientation="Vertical">
-            <controls:MoreFolderItemControl ItemPosition="3" />
+        <StackPanel Orientation="Vertical" Width="500">
+            <controls:MoreFolderItemControl ItemPosition="2" ItemName="Test Name" ItemPath="Test Path" />
+            <controls:MoreFolderItemControl ItemPosition="-1" ItemName="Test Name" ItemPath="Test Path" />
+            <controls:MoreFolderItemControl Classes="hover" />
             <controls:MoreFolderItemControl Classes="editing" />
         </StackPanel>
     </Design.PreviewWith>
@@ -12,85 +14,103 @@
         <!-- Set Defaults -->
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid ColumnDefinitions="Auto, Auto, *, Auto"
-                      RowDefinitions="Auto, Auto">
+                <Grid ColumnDefinitions="60, *"
+                      RowDefinitions="40, 40"
+                      Background="{TemplateBinding Background}">
+
+                    <TextBlock Grid.Column="0"
+                               Grid.Row="0"
+                               Grid.RowSpan="2"
+                               Padding="5,5,2.5,5"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Text="{TemplateBinding ItemPosition, Converter={StaticResource MoreFolderItemPositionConverter}}" />
+
+                    <TextBlock Grid.Column="1"
+                               Grid.Row="0"
+                               Padding="2.5,10,5,5"
+                               VerticalAlignment="Center"
+                               FontWeight="Bold"
+                               Text="{TemplateBinding ItemName}" />
+
+                    <TextBlock Grid.Column="1"
+                               Grid.Row="1"
+                               Padding="2.5,5,5,10"
+                               VerticalAlignment="Center"
+                               Text="{TemplateBinding ItemPath}" />
+                    
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style Selector="controls|MoreFolderItemControl.hover">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid ColumnDefinitions="60, *, Auto"
+                      RowDefinitions="40, 40"
+                      Background="{TemplateBinding Background}">
 
                     <Button Grid.Column="0"
                             Grid.Row="0"
+                            Margin="5,5,2.5,2.5"
+                            Padding="2.5"
+                            HorizontalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Command="{TemplateBinding EditCommand}">
+                        <Image Height="25"
+                               Source="{SvgImage avares://AS2_Tools/Assets/edit.svg}" />
+                    </Button>
+
+                    <Button Grid.Column="0"
+                            Grid.Row="1"
+                            Margin="5,2.5,2.5,5"
+                            Padding="2.5"
+                            HorizontalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Command="{TemplateBinding RemoveButtonCommand}">
+                        <Image Height="25"
+                               Source="{SvgImage avares://AS2_Tools/Assets/delete.svg}" />
+                    </Button>
+
+                    <TextBlock Grid.Column="1"
+                               Grid.Row="0"
+                               Padding="2.5,10,5,5"
+                               VerticalAlignment="Center"
+                               FontWeight="Bold"
+                               Text="{TemplateBinding ItemName}" />
+
+                    <TextBlock Grid.Column="1"
+                               Grid.Row="1"
+                               Padding="2.5,5,5,10"
+                               VerticalAlignment="Center"
+                               Text="{TemplateBinding ItemPath}" />
+                    
+                    <Button Grid.Column="2"
+                            Grid.Row="0"
                             Padding="0"
                             Margin="5,5,5,2.5"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Center"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
                             Command="{TemplateBinding UpButtonCommand}">
                         <Image Height="25"
                                Source="{SvgImage avares://AS2_Tools/Assets/upArrow.svg}" />
                     </Button>
-                    <Button Grid.Column="0"
+                    
+                    <Button Grid.Column="2"
                             Grid.Row="1"
                             Padding="0"
                             Margin="5,2.5,5,5"
-                            Width="50"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Center"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
                             Command="{TemplateBinding DownButtonCommand}">
                         <Image Height="25"
                                Source="{SvgImage avares://AS2_Tools/Assets/downArrow.svg}" />
                     </Button>
-
-                    <Label Grid.Column="1"
-                           Grid.Row="0"
-                           Padding="0"
-                           Margin="5"
-                           Width="50"
-                           HorizontalAlignment="Stretch"
-                           HorizontalContentAlignment="Center"
-                           VerticalContentAlignment="Center"
-                           Content="Order" />
-                    <Label Grid.Column="1"
-                           Grid.Row="1"
-                           Margin="5"
-                           Width="50"
-                           HorizontalAlignment="Center"
-                           HorizontalContentAlignment="Center"
-                           VerticalAlignment="Center"
-                           VerticalContentAlignment="Center"
-                           Content="{TemplateBinding ItemPosition, Converter={StaticResource MoreFolderItemPositionConverter}}" />
-
-                    <TextBlock Grid.Column="2"
-                               Grid.Row="0"
-                               Margin="5,5,5,2.5"
-                               VerticalAlignment="Center"
-                               Text="{TemplateBinding ItemName}" />
-                    <TextBlock Grid.Column="2"
-                               Grid.Row="1"
-                               Margin="5,2.5,5,5"
-                               VerticalAlignment="Center"
-                               TextWrapping="Wrap"
-                               Text="{TemplateBinding ItemPath}" />
-
-                    <Button Grid.Column="3"
-                            Grid.Row="0"
-                            Padding="0"
-                            Margin="5,5,5,2.5"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Center"
-                            Command="{TemplateBinding EditCommand}">
-                        <Image Height="25"
-                               Margin="5"
-                               Source="{SvgImage avares://AS2_Tools/Assets/edit.svg}" />
-                    </Button>
-                    <Button Grid.Column="3"
-                            Grid.Row="1"
-                            Padding="0"
-                            Margin="5,2.5,5,5"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Center"
-                            Command="{TemplateBinding RemoveButtonCommand}">
-                        <Image Height="25"
-                               Margin="5"
-                               Source="{SvgImage avares://AS2_Tools/Assets/delete.svg}" />
-                    </Button>
-
                 </Grid>
             </ControlTemplate>
         </Setter>
@@ -100,108 +120,93 @@
         <!-- Set Defaults -->
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid ColumnDefinitions="Auto, Auto, *, Auto"
-                      RowDefinitions="Auto, Auto">
+                <Grid ColumnDefinitions="Auto, Auto, *"
+                      RowDefinitions="40, 40"
+                      Background="{TemplateBinding Background}">
 
-                    <Label Grid.Column="0"
-                           Grid.Row="0"
-                           Padding="0"
-                           Margin="5"
-                           Width="50"
-                           HorizontalAlignment="Stretch"
-                           HorizontalContentAlignment="Center"
-                           VerticalContentAlignment="Center"
-                           Content="Order" />
-                    <TextBox Grid.Column="0"
-                             Grid.Row="1"
-                             Margin="5"
-                             Padding="5"
-                             Width="50"
-                             HorizontalAlignment="Center"
-                             HorizontalContentAlignment="Center"
-                             VerticalAlignment="Center"
-                             VerticalContentAlignment="Center"
-                             Text="{TemplateBinding ItemPosition, Converter={StaticResource MoreFolderItemPositionConverter}, Mode=TwoWay}" />
+                    <NumericUpDown Grid.Column="0"
+                                   Grid.Row="0"
+                                   Margin="5,5,5,2.5"
+                                   VerticalAlignment="Center"
+                                   Minimum="-1"
+                                   FormatString="{}{0:0}"
+                                   Value="{TemplateBinding ItemPosition, Mode=TwoWay, Converter={StaticResource MoreFolderItemPositionConverter}}" />
 
-                    <Button Grid.Column="1"
-                            Grid.Row="0"
-                            Padding="0"
-                            Margin="5,5,5,2.5"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Center"
-                            Command="{TemplateBinding UpButtonCommand}">
-                        <Image Height="25"
-                               Source="{SvgImage avares://AS2_Tools/Assets/upArrow.svg}" />
-                    </Button>
-                    <Button Grid.Column="1"
-                            Grid.Row="1"
-                            Padding="0"
-                            Margin="5,2.5,5,5"
-                            Width="50"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Center"
-                            Command="{TemplateBinding DownButtonCommand}">
-                        <Image Height="25"
-                               Source="{SvgImage avares://AS2_Tools/Assets/downArrow.svg}" />
-                    </Button>
-
-                    <TextBox Grid.Column="2"
-                             Grid.Row="0"
-                             VerticalAlignment="Center"
-                             VerticalContentAlignment="Center"
-                             Margin="5,5,5,2.5"
-                             Text="{TemplateBinding ItemName, Mode=TwoWay}" />
-                    
-                    <Grid Grid.Column="2"
-                          Grid.Row="1"
-                          ColumnDefinitions="*, Auto">
-                        
-                        <TextBox Grid.Column="0"
-                                 VerticalAlignment="Center"
-                                 VerticalContentAlignment="Center"
-                                 CornerRadius="3,0,0,3"
-                                 BorderThickness="1,1,0,1"
-                                 Margin="5,4,0,5"
-                                 TextWrapping="Wrap"
-                                 Text="{TemplateBinding ItemPath, Mode=TwoWay}" />
-                        
-                        <Button Grid.Column="1"
-                                HorizontalAlignment="Stretch"
+                    <StackPanel Grid.Column="0"
+                                Grid.Row="1"
+                                Margin="5,2.5,5,5"
+                                Orientation="Horizontal"
+                                Spacing="5">
+                        <Button HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Center"
                                 VerticalAlignment="Center"
                                 VerticalContentAlignment="Center"
+                                Command="{TemplateBinding EditCommand}">
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="5,0">
+                                <Image Height="25"
+                                       Source="{SvgImage avares://AS2_Tools/Assets/checkmark.svg}" />
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Text="Done" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Command="{TemplateBinding RemoveButtonCommand}">
+                            <Image Height="25"
+                                   Source="{SvgImage avares://AS2_Tools/Assets/delete.svg}" />
+                        </Button>
+                    </StackPanel>
+
+                    <TextBlock Grid.Column="1"
+                               Grid.Row="0"
+                               Margin="5"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Text="Title:" />
+
+                    <TextBlock Grid.Column="1"
+                               Grid.Row="1"
+                               Margin="5"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Text="Path:" />
+
+                    <TextBox Grid.Column="2"
+                             Grid.Row="0"
+                             Margin="5,0"
+                             VerticalAlignment="Center"
+                             VerticalContentAlignment="Center"
+                             FontWeight="Bold"
+                             Text="{TemplateBinding ItemName, Mode=TwoWay}" />
+
+                    <Grid Grid.Column="2"
+                          Grid.Row="1"
+                          Margin="5,0"
+                          ColumnDefinitions="*, Auto">
+
+                        <TextBox Grid.Column="0"
+                                 VerticalAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 BorderThickness="1,1,0,1"
+                                 CornerRadius="3,0,0,3"
+                                 Text="{TemplateBinding ItemPath, Mode=TwoWay}" />
+                        <Button Grid.Column="1"
                                 Padding="6,7,6,6"
-                                Margin="0,0,5,0"
-                                BorderBrush="White"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
                                 BorderThickness="1"
-                                CornerRadius="0, 3, 3, 0"
+                                BorderBrush="White"
+                                CornerRadius="0,3,3,0"
                                 Content="Browse"
                                 Command="{TemplateBinding BrowseButtonCommand}"
                                 CommandParameter="{TemplateBinding BrowseWindowParameter}"/>
+                        
                     </Grid>
-
-                    <Button Grid.Column="3"
-                            Grid.Row="0"
-                            Padding="0"
-                            Margin="5,5,5,2.5"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Center"
-                            Command="{TemplateBinding EditCommand}">
-                        <Image Height="25"
-                               Margin="5"
-                               Source="{SvgImage avares://AS2_Tools/Assets/checkmark.svg}" />
-                    </Button>
-                    <Button Grid.Column="3"
-                            Grid.Row="1"
-                            Padding="0"
-                            Margin="5,2.5,5,5"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Center"
-                            Command="{TemplateBinding RemoveButtonCommand}">
-                        <Image Height="25"
-                               Margin="5"
-                               Source="{SvgImage avares://AS2_Tools/Assets/delete.svg}" />
-                    </Button>
 
                 </Grid>
             </ControlTemplate>

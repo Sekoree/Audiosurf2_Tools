@@ -54,9 +54,11 @@ public class MoreFoldersViewModel : ViewModelBase, IPageViewModel
         var localPath = folderUri.LocalPath;
         if (!Directory.Exists(localPath))
             return;
-        var newMoreFoldersItem = new MoreFolderItemModel()
+        var newMoreFoldersItem = new MoreFolderItemModel
         {
-            Path = localPath
+            Path = localPath,
+            ParentCollection = MoreFoldersItems,
+            IsEditing = true
         };
         MoreFoldersItems?.Add(newMoreFoldersItem);
     }

@@ -9,12 +9,17 @@ using Microsoft.Win32;
 
 namespace AS2_Tools;
 
-public class GameUtils
+public static class GameUtils
 {
     /// <summary>
     /// When in doubt use <see cref="GetGameLocationAsync"/>
     /// </summary>
-    public static string GamePath = string.Empty;
+    private static string GamePath = string.Empty;
+    
+    public static void SetGamePath(string path)
+    {
+        GamePath = path;
+    }
     
     public static async Task<string?> GetGameLocationAsync()
     {

@@ -14,7 +14,11 @@ public class MoreFoldersManager
 {
     public async Task<ObservableCollection<MoreFolderItemModel>?> LoadMoreFolderItemsFromFileAsync()
     {
-        var path = Path.Combine(GameUtils.GamePath, "MoreFolders.json");
+        var gamePath = await GameUtils.GetGameLocationAsync();
+        if (gamePath == null)
+            return new ObservableCollection<MoreFolderItemModel>();
+        
+        var path = Path.Combine(gamePath, "MoreFolders.json");
         if (!File.Exists(path))
             return new ObservableCollection<MoreFolderItemModel>();
         
@@ -31,7 +35,11 @@ public class MoreFoldersManager
     
     public async Task SaveMoreFolderItemsToFileAsync(IEnumerable<MoreFolderItemModel> items)
     {
-        var path = Path.Combine(GameUtils.GamePath, "MoreFolders.json");
+        var gamePath = await GameUtils.GetGameLocationAsync();
+        if (gamePath == null)
+            return;
+        
+        var path = Path.Combine(gamePath, "MoreFolders.json");
         var modelsAsEntities = items.Adapt<List<MoreFolderItem>>();
         var json = JsonSerializer.Serialize(modelsAsEntities);
         await File.WriteAllTextAsync(path, json);

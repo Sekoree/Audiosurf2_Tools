@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using AS2_Tools.Views;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
-using Avalonia.Threading;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -56,7 +54,7 @@ public class LauncherViewModel : ViewModelBase
                 if (File.Exists(Path.Combine(localPath, "Audiosurf2.exe")))
                 {
                     //Save game location
-                    GameUtils.GamePath = localPath;
+                    GameUtils.SetGamePath(localPath);
                     LoadingStatus = "Game found!";
                     gameFound = true;
                 }
@@ -73,7 +71,7 @@ public class LauncherViewModel : ViewModelBase
         }
 
         //Try getting Patch version from Updater location
-        var patchVersion = await GameUtils.GetPatchVersionAsync(GameUtils.GamePath);
+        var patchVersion = await GameUtils.GetPatchVersionAsync(gameLocation);
         if (string.IsNullOrEmpty(patchVersion))
         {
             InstallerNeeded = true;
@@ -88,11 +86,8 @@ public class LauncherViewModel : ViewModelBase
             var vm = new MainWindowViewModel();
             //Init all PageViewModels
             await vm.MoreFoldersViewModel.InitializeAsync();
-            //await vm.PlaylistsViewModel.InitializeAsync();
-            //await vm.TwitchBotViewModel.InitializeAsync();
-            //await vm.TwitchBotSettingsViewModel.InitializeAsync();
-            //await vm.TwitchBotCommandsViewModel.InitializeAsync();
-            //await vm.SettingsViewModel.InitializeAsync();
+            await vm.PlaylistEditorViewModel.InitializeAsync();
+            await vm.TwitchBotMainViewModel.InitializeAsync();
             await vm.AboutViewModel.InitializeAsync();
             var mainWindow = new MainWindow()
             {
@@ -142,10 +137,17 @@ public class LauncherViewModel : ViewModelBase
         destinationStream.Seek(0, SeekOrigin.Begin);
         InstallerStatus = "Extracting Patch...";
         //Extract zip to game location
+        var path = await GameUtils.GetGameLocationAsync();
+        if (string.IsNullOrEmpty(path))
+        {
+            InstallerStatus = "Error extracting patch, exiting...";
+            await Task.Delay(5000);
+            Environment.Exit(1);
+            return;
+        }
         var zip = new ZipArchive(destinationStream);
-        zip.ExtractToDirectory(GameUtils.GamePath, true);
+        zip.ExtractToDirectory(path, true);
         InstallerStatus = "Patch installed!";
-        // Task.Delay(2000);
         InstallerNeeded = false;
         InstallerRunning = false;
         await InitializeAsync();
